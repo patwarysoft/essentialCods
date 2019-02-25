@@ -1,0 +1,7 @@
+Add following code to AppServiceProvider.php (/app/Providers/AppServiceProvider.php)
+
+1. use Illuminate\Support\Facades\Schema; //NEW: Import Schema
+2. function boot()
+{
+    Schema::defaultStringLength(191); //NEW: Increase StringLength
+}
