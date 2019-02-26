@@ -1,0 +1,37 @@
+1. You need to take "user_type" at database;
+
+2. Make:Middleware CMD_"php artisan make:middleware 'MiddlewareCamelCaseName'";
+
+3. Register your middleware->App->Http->Kernel.php{protected $routeMiddleware}=[
+
+	(copy it) 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+	->go end;
+	->past;
+	'make a middleware name' => \App\Http\Middleware\CreatedMiddlewareName::class,
+
+4. Go your controller inside the class and make->
+	public function __construct(){
+ 
+	       	$this->middleware('auth');
+ 
+		$this->middleware('middleware name');
+	}
+
+5. Go your meddleware 
+	Use Auth;
+
+6. Go  public function handle($request, Closure $next)
+{
+
+//make condition start
+		if (Auth::user()->user_type ==1) {
+
+		        return redirect('whereEver??');
+	
+      }
+//make condition end
+      
+        return $next($request);
+
+	
+    }
