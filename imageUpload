@@ -1,0 +1,33 @@
+Laravel way..............................................................
+
+image Upload instruction;
+search laravel.com; https://laravel.com/docs/5.7/filesystem
+preparation:
+  1. make a fild in database for image.
+  2. add ('enctype="multipart/image"');
+1. create symblic link/ Create shortcut key; [
+go: config folder->
+    filesystems.php ->
+    change ->'default' => env('FILESYSTEM_DRIVER', 'local'), ['local'] to ['public']; //re-start your server ('you changed configuretion')
+    CMD:: ('php artisan storage:link'); //success msg{The [public/storage] directory has been linked.}
+//check program   if ($request->hasFile('image_name_filed')) {
+  echo "file Availabe";
+}else{
+  echo "not fund";
+}
+
+insert this functionality
+
+$path = $request->file('avatar')->store('store_folder_name');
+
+]
+
+image view;[
+go: Controller
+use App\Modle;
+make function:
+public function index(){
+    $currency = Currency::all();
+    return view('admin/admin_index', compact('currency'));
+}
+]
