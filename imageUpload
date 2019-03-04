@@ -33,11 +33,31 @@ public function index(){
 ]
 3rd party image directory (intervention.image)-...........
 
-    public function currencyDataSubmit(Request $request){
-      if($request->hasFile('icon')){
-    $currency_icon = $request->file('icon');
-    $filename = 'patwary' . '.' . $currency_icon->getClientOriginalExtension();
-    Image::make($currency_icon)->resize(512, 512)->save( base_path('public/frontend_assets/uploads/' . $filename ),40 );
+3rd party image uplaod system;//you can give water mark also using this package
+go: http://image.intervention.io/
+CMD: ('    composer require intervention/image    ')
+
+After you have installed Intervention Image, open your Laravel config file config/app.php and add the following lines.
+
+In the $providers array add the service providers for this package.
+
+  ('   Intervention\Image\ImageServiceProvider::class    ')
+
+Add the facade of this package to the $aliases array.
+
+  ('  'Image' => Intervention\Image\Facades\Image::class    ')
+
+CMD: ('   php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5"      ')
+
+
+View:
+use Image;
+3rd party image directory (intervention.image)
+public function currencyDataSubmit(Request $request){
+  if($request->hasFile('icon')){
+$currency_icon = $request->file('icon');
+$filename = 'patwary' . '.' . $currency_icon->getClientOriginalExtension();
+Image::make($currency_icon)->resize(512, 512)->save( base_path('public/frontend_assets/uploads/' . $filename ),40 );
 }
 ..............................................
 
