@@ -31,7 +31,15 @@ public function index(){
     return view('admin/admin_index', compact('currency'));
 }
 ]
+3rd party image directory (intervention.image)-...........
 
+    public function currencyDataSubmit(Request $request){
+      if($request->hasFile('icon')){
+    $currency_icon = $request->file('icon');
+    $filename = 'patwary' . '.' . $currency_icon->getClientOriginalExtension();
+    Image::make($currency_icon)->resize(512, 512)->save( base_path('public/frontend_assets/uploads/' . $filename ),40 );
+}
+..............................................
 
 3rd party image directory (intervention.image) //copy from ('https://github.com/shohanean/')
 #upload the photo at directory and storing the informations at database
