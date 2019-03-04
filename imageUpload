@@ -31,3 +31,17 @@ public function index(){
     return view('admin/admin_index', compact('currency'));
 }
 ]
+
+
+3rd party image directory (intervention.image) //copy from ('https://github.com/shohanean/')
+#upload the photo at directory and storing the informations at database
+
+if($request->hasFile('tenant_photo')){
+    $insertIntoDB = Tenant::findorfail($insertedTenantId);
+    $tenant_photo = $request->file('tenant_photo');
+
+    $filename = $insertedTenantId . '.' . $tenant_photo->getClientOriginalExtension();
+    Image::make($tenant_photo)->resize(150, 195)->save( base_path('public/uploads/tenant_avatars/' . $filename ),40 );
+    $insertIntoDB->tenant_avatar = $filename;
+    $insertIntoDB->save();
+}
