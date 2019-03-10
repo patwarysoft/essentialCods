@@ -28,4 +28,7 @@ Email verification::
             change {class User extends Authenticatable //add (implements MustVerifyEmail)}
       2. Get ready your migration table useing {php artisan migrate} (if not yet you migrate your database)
       3. Go (routes\web.php )
+            make it:  {Auth::routes(['verify' => true]);}
+      4. Go (App\Controller\HomeController.php)
+	      make it: $this->middleware('verified');
 }
