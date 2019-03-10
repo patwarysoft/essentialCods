@@ -1,0 +1,22 @@
+Testing Mail
+
+GO; mailtrap.io
+create/login here;-
+{
+      1. create inbox.
+
+      2. SMTP (.env root file)
+        Host:	smtp.mailtrap.io
+
+        Port:	25 or 465 or 2525
+
+        Username:	f831c9ddbd7672 //use generated code
+
+        Password:	a90efb34e5e3e2 //use generated code
+
+        TLS:	tls
+
+      3. APP_URL 
+
+        APP_URL= //make it blanke
+  }
