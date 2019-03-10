@@ -1,3 +1,42 @@
+Email Sending::{
+	Open your gmail account;
+	1. Go:- GoogleAccount->App passwords {create a App password} (Note:: if this account already not created 2 steap varification, it will not show)
+
+	2. SMTP (.env root file)
+		Host:	smtp.gmail.com
+		Port:	587
+		Username:	whatever@gmail.com //use valided email address whhere you created App passwords
+		Password:	a90efb34e5e3e2 //use generated code
+		TLS:	tls
+
+	3. APP_URL 
+		APP_URL= //make it blanke
+
+	4. composer require guzzlehttp/guzzle
+
+	5. php artisan make:mail OrderShipped  //Your suitable name.
+
+	6. Change at : App\Mail\CreatedModle.php 
+		public function build()
+	  {
+
+			return $this->from('intrigate@gmail.com')->view('whatever');
+		}
+
+	7. use App\Mail\OrderShipped;  //at your controller.
+
+	8.   Mail::to($request->user())->send(new OrderShipped($order));
+
+		public function exchangeconfirmation(Request $request){
+
+			Mail::to($request->clients_email)->send(new Confirmation());
+
+	  }
+  }
+
+
+
+
 Real Email verification::{
 Open your gmail account;
 1. Go:- GoogleAccount->App passwords {create a App password} (Note:: if this account already not created 2 steap varification, it will not show)
