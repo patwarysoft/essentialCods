@@ -20,3 +20,12 @@ create/login here;-
 
         APP_URL= //make it blanke
   }
+  
+
+Email verification::
+{
+      1. Go (App\User.php (model))
+            change {class User extends Authenticatable //add (implements MustVerifyEmail)}
+      2. Get ready your migration table useing {php artisan migrate} (if not yet you migrate your database)
+      3. Go (routes\web.php )
+}
