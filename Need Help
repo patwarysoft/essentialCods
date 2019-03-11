@@ -1,0 +1,11 @@
+1. Amount calculating without reloading page; Reserve data; Exchange rate;
+2. Stop Developer Errors;
+3.
+4. Creating page  a. How to create a page, link and view from admin panel?
+                  b. How to create a page for menu with created page link?
+5. Laravel Invoice send by Email,
+6. Laravel Invoice print;
+7. Laravel Invoice download;
+8. Registration URL hiding  a. If anybody can visit our registration page, everyone can change our admin site. What is sollotion about it?
+    NB: middleware is one of sollotion, but, i need more kind of system.
+9.  Password Reset  a. It is redirecting at laravel building page
