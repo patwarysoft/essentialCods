@@ -1,0 +1,11 @@
+Facebook 
+
+https://www.facebook.com/sharer/sharer.php?display=popup&u={{ url('/')}}
+
+Twitter 
+
+https://twitter.com/intent/tweet?text=
+
+Google Plus
+
+https://plus.google.com/share?url=
