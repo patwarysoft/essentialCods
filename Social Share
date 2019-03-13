@@ -1,3 +1,4 @@
+
 Facebook 
 
 https://www.facebook.com/sharer/sharer.php?display=popup&u={{ url('/')}}
@@ -9,3 +10,9 @@ https://twitter.com/intent/tweet?text=
 Google Plus
 
 https://plus.google.com/share?url=
+
+Linkedin
+https://www.linkedin.com/shareArticle?mini=true&url=&title=&summary=&source={{ url('/events')}}
+
+Mail to
+mailto:?={{ url('/events')}}
