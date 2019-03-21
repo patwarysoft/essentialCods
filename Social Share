@@ -5,11 +5,11 @@ https://www.facebook.com/sharer/sharer.php?display=popup&u={{ url('/')}}
 
 Twitter 
 
-https://twitter.com/intent/tweet?text=
+https://twitter.com/intent/tweet?text={{ url('/')}}
 
 Google Plus
 
-https://plus.google.com/share?url=
+https://plus.google.com/share?url={{ url('/')}}
 
 Linkedin
 https://www.linkedin.com/shareArticle?mini=true&url=&title=&summary=&source={{ url('/events')}}
