@@ -1,0 +1,22 @@
+1.  add this css: <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+2.  add this script: <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+3.  use this script at your page bottom upper the body tag:
+
+    <script>
+    $(document).ready(function() {
+        $('#country').select2();
+        $('#city').select2();
+    });
+    </script>
+    
+
+4.  make an 'id' where you want to use it.
+exemple{          <select class="form-control" name="user_country" id="country">
+                              <option value="">Choose a country</option>
+                            @foreach ($countries as $country)
+                              <option value="{{ $country->id }}">{{ $country->name }}</option>
+                            @endforeach
+
+                  </select>
