@@ -1,0 +1,17 @@
+1. composer require barryvdh/laravel-dompdf
+
+2. config\app.php  aliases  {  'PDF' => Barryvdh\DomPDF\Facade::class,   }
+
+3. php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+
+4.      public function pdffunction(){
+      $data = Country::all();
+      $pdf = PDF::loadView('pdf/invoice', compact('data'));
+      return $pdf->download('invoice.pdf');
+    }
+    
+5. use PDF;
+
+6. make a view pdf/invoice
+
+7. <p>  {{ $data }}   </p>
