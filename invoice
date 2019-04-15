@@ -7,7 +7,16 @@
 4.      public function pdffunction(){
       $data = Country::all();
       $pdf = PDF::loadView('pdf/invoice', compact('data'));
-      return $pdf->download('invoice.pdf');
+      
+      if(only show){
+      return $pdf->stream('invoice.pdf');  use only this line
+      }
+      
+      if(dirrectly download the page){
+      return $pdf->download('invoice.pdf'); or use only this line
+      }
+      
+
     }
     
 5. use PDF;
