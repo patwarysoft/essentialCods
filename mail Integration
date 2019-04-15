@@ -7,7 +7,7 @@ Email Sending::{
 		Port:	587
 		Username:	whatever@gmail.com //use valided email address whhere you created App passwords
 		Password:	a90efb34e5e3e2 //use generated code
-		TLS:	tls
+		MAIL_ENCRYPTION=tls
 
 	3. APP_URL 
 		APP_URL= //make it blanke
