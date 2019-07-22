@@ -130,3 +130,148 @@ class FeeSubCategoryController extends Controller
         return redirect('admin/feesubcategory')->with("success","This fee subcategory is Deleted Successfully"); 
     }
 }
+
+<?php
+
+namespace App\Http\Controllers\contents;
+
+use App\models\SiteSetting;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Session;
+use Image;
+
+class SiteSettingController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+         $sitesetting = SiteSetting::all();
+         return view('admin.contents.websetting.view',compact('sitesetting'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+
+         $sitesetting = SiteSetting::find($id);
+         return view('admin.contents.websetting.edit',compact('sitesetting'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+       
+        if($request->hasFile('logo')){
+         $logo = SiteSetting::findOrFail($id);
+        $image_path = "public/fontend/websetting/{$logo->logo}";
+          unlink($image_path);
+
+        $logo = $request->file('logo');
+        $filename = str_random(9) . '.' . $logo->getClientOriginalExtension();
+        Image::make($logo)->resize(300, 300)->save( base_path('public/fontend/websetting/' . $filename ),100 );
+
+        $sitesetting = SiteSetting::findOrFail($id);
+        $sitesetting->logo = $filename;
+        $save = $sitesetting->save();
+        }
+
+
+
+        if($request->hasFile('banner')){
+         $banner = SiteSetting::findOrFail($id);
+        $image_pathbanner = "public/fontend/websetting/{$banner->banner}";
+          unlink($image_pathbanner);
+
+        $banner = $request->file('banner');
+        $filenamebanner = str_random(9) . '.' . $banner->getClientOriginalExtension();
+        Image::make($banner)->resize(200, 100)->save( base_path('public/fontend/websetting/' . $filenamebanner ),100 );
+
+        $sitesetting = SiteSetting::findOrFail($id);
+        $sitesetting->banner = $filenamebanner;
+        $save = $sitesetting->save();
+        }
+
+        $sitesetting = SiteSetting::findOrFail($id);
+        $sitesetting->schoolname = $request->schoolname;
+        $sitesetting->eiin = $request->eiin;
+        $sitesetting->postcode = $request->postcode;
+        $sitesetting->mobile = $request->mobile;
+        $sitesetting->email = $request->email;
+       
+        
+        $sitesetting->localaddress = $request->localaddress;
+        $sitesetting->stateaddress = $request->stateaddress;
+        $sitesetting->mapcode = $request->mapcode;
+    
+        $save = $sitesetting->save();
+        
+        if ($save) {
+                
+        Session::flash('success','Sitesetting update successfully');
+
+        return redirect('/admin/sitesetting'); 
+        }else{
+            return view('admin/sitesetting/edit/'.$id);
+        }
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
