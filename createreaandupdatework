@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Http\Controllers\accounts;
+
+use Illuminate\Http\Request;
+use App\models\FeeSubCategory;
+use App\models\FeeCategory;
+use App\Http\Controllers\Controller;
+use Session;
+
+class FeeSubCategoryController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+ 
+    public function index()
+    {
+           $feesubcat = FeeSubCategory::all();
+           
+        return view('admin.accounts.feesubcategory.view',compact('feesubcat'));
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $feecategory = FeeCategory::all();
+        return view('admin.accounts.feesubcategory.add', compact('feecategory'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        
+
+    // print_r($request->all());
+         $this->validate($request,[
+          'name' => 'required',
+          'feecategory_id' => 'required',
+          'amount' => 'required'
+        ]);
+
+
+         $feesubcat = new FeeSubCategory();
+
+         $feesubcat->feecategory_id = $request->feecategory_id;
+         $feesubcat->amount = $request->amount;
+         $feesubcat->name = $request->name;
+         $feesubcat->save();
+         
+           Session::flash('success','New fee subcategory are add successfully');
+          return redirect('admin/feesubcategory');
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $feesubcat = FeeSubCategory::find($id);
+        $feecat = FeeCategory::all();
+        return view('admin/accounts/feesubcategory/edit',compact('feesubcat', 'feecat'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $feesubcategory = FeeSubCategory::findOrFail($id);
+         $feesubcategory->name = $request->name;
+        $feesubcategory->amount = $request->amount;
+        $feesubcategory->feecategory_id = $request->feecategory_id;
+    
+        $save = $feesubcategory->save();
+        
+        if ($save) {
+                
+        Session::flash('success','Fee subcategory update successfully');
+
+        return redirect('/admin/feesubcategory'); 
+        }else{
+            return view('admin/accounts/feesubcategory/edit/'.$id);
+        }
+
+        
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $data = FeeSubCategory::findOrFail($id);
+         $data->delete();
+        return redirect('admin/feesubcategory')->with("success","This fee subcategory is Deleted Successfully"); 
+    }
+}
