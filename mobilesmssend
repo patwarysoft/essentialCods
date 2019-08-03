@@ -1,0 +1,157 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\models\Career;
+use Illuminate\Http\Request;
+
+use Session;
+class CareerController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $careers = Career::all();
+
+        return view('layouts.careers.career',compact('careers'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'mobile' => 'required|unique:careers|max:11|min:11',
+            'email' => 'required|unique:careers'
+        ]);
+
+         $careers = New Career;
+         $careers->name = $request->name;
+         $careers->mobile = $request->mobile;
+         $careers->email = $request->email;
+         $careers->dob_day = $request->dob_day;
+         $careers->dob_month = $request->dob_month;
+         $careers->dob_year = $request->dob_year;
+         $careers->expart_area = $request->expart_area;
+
+       if ($request->hasFile('cv_file')) {
+            $file = $request->file('cv_file');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->name.'_'.$request->mobile.'.'.$extension;
+            $file->move('public/img/cv',$filename);
+
+            $careers->cv_file = $filename;
+        }
+
+          
+
+         $careers->save();
+
+        $mobile = "88".$request->mobile;
+        $msg = "Dear ".$request->name.",
+Your CV successfully submitted to http://myitbd.com. After Reviewing your CV, if you are a valid candidate, we will contact with you later. Thank you for participate with us.
+
+-MyITBD";
+
+
+         Session::flash('success','Your information submit successfully');
+
+         $this->curlSmsSend($mobile,$msg);
+
+         return redirect('/careers');
+
+    }
+
+
+    private static function curlSmsSend($mobile_no, $message)
+                {
+                    $msg = urlencode($message);
+                    $url = 'http://api.zaman-it.com/api/v3/sendsms/plain?user=01779325718&password=ABCabcf@!!&sender=DBNLTD&SMSText='.$msg.'&GSM='.$mobile_no.'&type=longSMS';
+                    $curl = curl_init();
+                    curl_setopt($curl, CURLOPT_URL, $url);
+                    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($curl, CURLOPT_USERAGENT, 'Sample cURL Request');
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+                    return $response;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\models\career  $career
+     * @return \Illuminate\Http\Response
+     */
+    public function show(career $career)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\models\career  $career
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(career $career)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\models\career  $career
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, career $career)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\models\career  $career
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($career)
+    {
+        Career::find($career)->delete();
+        Session::flash('success','CV has been deleted');
+        return redirect('/admin/careers');
+
+    }
+}
