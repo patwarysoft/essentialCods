@@ -1,0 +1,83 @@
+<div>
+  <div id="districturl" data-districturl="{{ url('/userdetail/getDistrictList')}}"></div>
+  <div id="upazilaurl" data-upazilaurl="{{ url('/userdetail/getUpazilaList')}}"></div>
+  <div id="unionurl" data-unionurl="{{ url('/userdetail/getUnionList')}}"></div>
+</div>
+
+
+@section('ajexscript')
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $('#division').on('change',function(){
+              var division_id =  $(this).val();
+              var districturl = $('#districturl').data("districturl");
+              $.ajax({
+                 url: districturl,
+                 data: {division_id:division_id},
+                 type: "GET",
+                 success: function(response){
+                   $('#district').html(response);
+                 },
+              });
+           });
+
+           $('#district').on('change',function(){
+              var district_id =  $(this).val();
+              var upazilaurl = $('#upazilaurl').data("upazilaurl");
+              $.ajax({
+                 url: upazilaurl,
+                 data: {district_id:district_id},
+                 type: "GET",
+                 success: function(response){
+                   $('#upazila').html(response);
+                 },
+              });
+           });
+
+           $('#upazila').on('change',function(){
+              var upazila_id =  $(this).val();
+              var unionurl = $('#unionurl').data("unionurl");
+              $.ajax({
+                 url: unionurl,
+                 data: {upazila_id:upazila_id},
+                 type: "GET",
+                 success: function(response){
+                   $('#union').html(response);
+                 },
+              });
+           });
+       });
+    </script>
+@endsection
+
+    public function getDistrictList(Request $request){
+      $districtHtmlOption = "<option value=''>Select One</option>";
+
+    $districts = District::where('division_id', $request->division_id)->get();
+    foreach ($districts as $district) {
+      $districtHtmlOption .= "<option value='$district->id'>$district->name</option>";
+    }
+    echo $districtHtmlOption;
+    // echo "This is ajax code success";
+    }
+    public function getUpazilaList(Request $request){
+      $upazilaHtmlOption = "<option value=''>Select One</option>";
+
+    $upazilas = Upazila::where('district_id', $request->district_id)->get();
+    foreach ($upazilas as $upazila) {
+      $upazilaHtmlOption .= "<option value='$upazila->id'>$upazila->name</option>";
+    }
+    echo $upazilaHtmlOption;
+    // echo "This is ajax code success";
+    }
+
+    public function getUnionList(Request $request){
+      $unionHtmlOption = "<option value=''>Select One</option>";
+
+    $unions = Union::where('upazila_id', $request->upazila_id)->get();
+    foreach ($unions as $union) {
+      $unionHtmlOption .= "<option value='$union->id'>$union->bn_name </option>";
+    }
+    echo $unionHtmlOption;
+    // echo "This is ajax code success";
+    }
