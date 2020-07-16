@@ -10,5 +10,6 @@ emmet
 atom-beautify
 highlight-selected
 todo
+autocomplete-paths
 
 autocomplete-sql
