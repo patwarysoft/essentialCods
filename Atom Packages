@@ -5,7 +5,7 @@ blade-snippets
 blade-spacer
 language-blade
 platformio-ide-terminal
-file-icon
+file-type-icon
 emmet
 atom-beautify
 highlight-selected
